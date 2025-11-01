@@ -1,0 +1,91 @@
+name: project_template
+description: "A Flutter project template designed with MVC architecture, GetX for state management, and HTTP client for API integration, enabling faster and structured app development."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+
+#---------------------- PACKAGES----------------------#
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Utility packages
+  http: ^1.4.0
+  intl: ^0.20.2
+  logger: ^2.6.1
+  url_launcher: ^6.1.12
+  flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.0.10+1
+  image_picker: ^1.1.2
+  permission_handler: ^11.0.1
+  cached_network_image: ^3.4.1
+  connectivity_plus: ^5.0.1
+  webview_flutter: ^4.13.0
+
+  # Loaders and Animations
+  lottie: ^2.4.2
+  shimmer: ^3.0.0
+  flutter_easyloading: ^3.0.5
+
+  # Icons
+  iconsax: ^0.0.8
+  cupertino_icons: ^1.0.8
+
+  # State Management and Storage
+  get: ^4.6.1
+  get_storage: ^2.1.1
+  flutter_secure_storage: ^9.2.4
+
+  # Fonts (Google Fonts - Optional)
+  google_fonts: ^6.2.1
+
+
+
+#---------------------- ./ PACKAGES END ----------------------#
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.4
+  change_app_package_name: ^1.5.0
+
+
+
+flutter:
+
+  uses-material-design: true
+
+  #---------------------- LOCAL ASSETS ----------------------#
+  assets:
+    - assets/fonts/
+    - assets/icons/
+    - assets/images/
+
+
+
+
+
+
+  #---------------------- LOCAL FONTS ----------------------#
+  # fonts:
+  #   - family: Poppins
+  #     fonts:
+  #       - asset: assets/fonts/Poppins-Italic.ttf
+  #         weight: 400
+  #         style: italic
+  #       - asset: assets/fonts/Poppins-Regular.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/Poppins-SemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/Poppins-Bold.ttf
+  #         weight: 700
