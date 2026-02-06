@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:project_template/core/common/widgets/shimmers/shimmer.dart';
-import 'package:project_template/core/utils/constants/colors.dart';
-import 'package:project_template/core/utils/constants/sizes.dart';
-import 'package:project_template/core/utils/helpers/app_helper.dart';
+import 'package:legacyhub/core/common/widgets/shimmers/shimmer.dart';
+import 'package:legacyhub/core/utils/constants/colors.dart';
+import 'package:legacyhub/core/utils/constants/sizes.dart';
+import 'package:legacyhub/core/utils/helpers/app_helper.dart';
 
 class AppCircularImage extends StatelessWidget {
   const AppCircularImage({

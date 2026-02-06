@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:project_template/core/services/logger_service.dart';
-import 'package:project_template/core/services/local_storage_service.dart';
-import 'package:project_template/core/utils/constants/app_constants.dart';
-import 'package:project_template/core/utils/constants/enums.dart';
+import 'package:legacyhub/core/services/logger_service.dart';
+import 'package:legacyhub/core/services/local_storage_service.dart';
+import 'package:legacyhub/core/utils/constants/app_constants.dart';
+import 'package:legacyhub/core/utils/constants/enums.dart';
 
 /// ============================================================================
 /// HTTP SERVICE - Professional API Communication Layer

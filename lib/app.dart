@@ -3,12 +3,12 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:project_template/core/bindings/initial_binding.dart';
-import 'package:project_template/core/localization/languages.dart';
-import 'package:project_template/core/services/local_storage_service.dart';
-import 'package:project_template/core/utils/theme/theme.dart';
-import 'package:project_template/routes/app_pages.dart';
-import 'package:project_template/routes/app_routes.dart';
+import 'package:legacyhub/core/bindings/initial_binding.dart';
+import 'package:legacyhub/core/localization/languages.dart';
+import 'package:legacyhub/core/services/local_storage_service.dart';
+import 'package:legacyhub/core/utils/theme/theme.dart';
+import 'package:legacyhub/features/main/views/screens/main_screen.dart';
+import 'package:legacyhub/routes/app_pages.dart';
 
 /// Root widget of the application
 class MyApp extends StatelessWidget {
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           // App basic configuration
-          title: 'Project Template by Pilot V',
+          title: 'LegacyHub - Business & Community Super App',
           debugShowCheckedModeBanner: false,
           useInheritedMediaQuery: true,
 
@@ -40,12 +40,13 @@ class MyApp extends StatelessWidget {
           ],
 
           // Theme configuration
-          themeMode: ThemeMode.system,
+          themeMode: LocalStorageService.getThemeMode(),
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
 
           // Routing configuration
-          initialRoute: AppRoutes.getHomeScreen(),
+          // initialRoute: AppRoutes.SPLASH,
+          home: MainScreen(),
           getPages: AppPages.routes,
           initialBinding: InitialBinding(),
 

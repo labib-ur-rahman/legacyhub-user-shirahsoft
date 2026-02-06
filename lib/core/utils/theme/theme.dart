@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_template/core/utils/constants/colors.dart';
-import 'package:project_template/core/utils/theme/custom_themes/chip_theme.dart';
-import 'package:project_template/core/utils/theme/custom_themes/text_theme.dart';
+import 'package:legacyhub/core/utils/constants/colors.dart';
+import 'package:legacyhub/core/utils/theme/custom_themes/chip_theme.dart';
+import 'package:legacyhub/core/utils/theme/custom_themes/text_theme.dart';
 
 import 'custom_themes/appbar_theme.dart';
 import 'custom_themes/bottom_sheet_theme.dart';

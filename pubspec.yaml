@@ -1,5 +1,5 @@
-name: project_template
-description: "A Flutter project template designed with MVC architecture, GetX for state management, and HTTP client for API integration, enabling faster and structured app development."
+name: legacyhub
+description: "LegacyHub - A Business & Community Super App for Bangladesh. Features digital services, product reselling, micro jobs, reward points, community posts, and wallet system."
 
 publish_to: 'none'
 
@@ -15,6 +15,17 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  # Firebase packages
+  firebase_core: ^3.13.0
+  firebase_auth: ^5.6.4
+  cloud_firestore: ^5.6.6
+  firebase_database: ^11.3.5
+  firebase_storage: ^12.4.5
+  firebase_messaging: ^15.2.5
+
+  # Authentication
+  google_sign_in: ^6.2.2
+
   # Utility packages
   http: ^1.4.0
   intl: ^0.20.2
@@ -29,13 +40,16 @@ dependencies:
   webview_flutter: ^4.13.0
 
   # Loaders and Animations
-  lottie: ^2.4.2
+  lottie: ^3.3.2
   shimmer: ^3.0.0
   flutter_easyloading: ^3.0.5
 
   # Icons
   iconsax: ^0.0.8
   cupertino_icons: ^1.0.8
+
+  # Animated Emoji for reactions
+  animated_emoji: ^3.2.1
 
   # State Management and Storage
   get: ^4.6.1
@@ -44,6 +58,7 @@ dependencies:
 
   # Fonts (Google Fonts - Optional)
   google_fonts: ^6.2.1
+  rename_app: ^1.6.5
 
 
 
@@ -67,8 +82,9 @@ flutter:
 
   #---------------------- LOCAL ASSETS ----------------------#
   assets:
-    - assets/fonts/
+    - assets/lottie/
     - assets/icons/
+    - assets/svg/
     - assets/images/
 
 

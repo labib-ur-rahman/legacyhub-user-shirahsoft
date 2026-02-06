@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_template/core/utils/constants/colors.dart';
-import 'package:project_template/core/utils/constants/enums.dart';
+import 'package:legacyhub/core/utils/constants/colors.dart';
+import 'package:legacyhub/core/utils/constants/enums.dart';
 
 /// Custom Button - Reusable button widget with consistent styling
 /// Supports primary, secondary, and text button styles

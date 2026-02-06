@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_template/core/utils/constants/colors.dart';
+import 'package:legacyhub/core/utils/constants/colors.dart';
 
 class AppCircularLoader extends StatelessWidget {
   final double size;

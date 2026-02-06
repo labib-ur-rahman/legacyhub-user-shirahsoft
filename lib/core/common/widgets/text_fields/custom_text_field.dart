@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_template/core/utils/constants/colors.dart';
+import 'package:legacyhub/core/utils/constants/colors.dart';
 
 /// Custom Text Field - Reusable text input with consistent styling
 class CustomTextField extends StatefulWidget {
@@ -116,10 +116,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: widget.borderRadius ?? BorderRadius.circular(12.r),
-              borderSide: BorderSide(
-                color: AppColors.primary,
-                width: 1,
-              ),
+              borderSide: BorderSide(color: AppColors.primary, width: 1),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: widget.borderRadius ?? BorderRadius.circular(12.r),
@@ -131,9 +128,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             disabledBorder: OutlineInputBorder(
               borderRadius: widget.borderRadius ?? BorderRadius.circular(12.r),
-              borderSide: BorderSide(
-                color: AppColors.buttonDisabled,
-              ),
+              borderSide: BorderSide(color: AppColors.buttonDisabled),
             ),
           ),
         ),

@@ -83,6 +83,9 @@ class LocalStorageService {
   /// User profile data storage
   static const String _keyUserData = 'user_data';
 
+  /// App style storage key
+  static const String _keyAppStyle = 'app_style';
+
   /// Initialize the storage service
   /// Must be called once during app startup before accessing storage
   ///
@@ -194,6 +197,64 @@ class LocalStorageService {
       LoggerService.error('❌ Failed to get locale', e);
       return const Locale('en', 'US'); // Default fallback
     }
+  }
+
+  // ============================================================================
+  // SECTION 2.5: APP STYLE MANAGEMENT
+  // ============================================================================
+  /// Save app style to storage
+  /// Persists user's app style preference (Shirah, Quepal, Timber, etc.)
+  ///
+  /// Parameters:
+  ///   - style: The app style to save (AppStyle enum value)
+  ///
+  /// Example:
+  ///   LocalStorageService.setAppStyle(AppStyle.quepal);
+  ///   // Style is now persisted and will be restored on next app launch
+  static void setAppStyle(dynamic style) {
+    try {
+      // Store the style index
+      _storage?.write(_keyAppStyle, style.index);
+      LoggerService.info('💾 App style saved: ${style.name}');
+    } catch (e) {
+      LoggerService.error('❌ Failed to save app style', e);
+    }
+  }
+
+  /// Retrieve saved app style from storage
+  /// Returns AppStyle.shirah as default fallback
+  ///
+  /// Returns:
+  ///   The saved AppStyle, or AppStyle.shirah if not found or on error
+  ///
+  /// Example:
+  ///   final style = LocalStorageService.getAppStyle();
+  ///   // Returns: AppStyle.quepal (if previously saved)
+  ///   // Returns: AppStyle.shirah (if no style saved)
+  static dynamic getAppStyle() {
+    try {
+      // Import needed for AppStyle enum - using dynamic to avoid circular imports
+      final index = _storage?.read(_keyAppStyle) ?? 0;
+      // We'll return the index and let the caller convert it
+      LoggerService.info('📖 App style index retrieved: $index');
+      // Using dynamic return to be converted by AppStyleColors
+      return _convertIndexToAppStyle(index);
+    } catch (e) {
+      LoggerService.error('❌ Failed to get app style', e);
+      return _convertIndexToAppStyle(0); // Default to first style (shirah)
+    }
+  }
+
+  /// Convert index to AppStyle enum value
+  /// Helper method to avoid importing AppStyle directly
+  static dynamic _convertIndexToAppStyle(int index) {
+    // This maps to AppStyle enum values in order:
+    // 0: shirah, 1: quepal, 2: timber, 3: flare, 4: amin, 5: midnight
+    const styles = ['shirah', 'quepal', 'timber', 'flare', 'amin', 'midnight'];
+    // Return a dynamic that can be matched by name
+    // The StyleController will handle the actual enum conversion
+    if (index < 0 || index >= styles.length) return 0;
+    return index;
   }
 
   // ============================================================================

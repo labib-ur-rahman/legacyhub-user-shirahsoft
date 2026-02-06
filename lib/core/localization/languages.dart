@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:get/get.dart';
-import 'package:project_template/core/localization/languages/en_us.dart';
-import 'package:project_template/core/localization/languages/bn_bd.dart';
+import 'package:legacyhub/core/localization/languages/en_us.dart';
+import 'package:legacyhub/core/localization/languages/bn_bd.dart';
 
 /// Multi-language support configuration for the application
 /// Uses GetX internationalization system

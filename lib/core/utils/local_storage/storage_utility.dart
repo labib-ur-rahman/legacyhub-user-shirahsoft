@@ -1,5 +1,5 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:project_template/core/services/logger_service.dart';
+import 'package:legacyhub/core/services/logger_service.dart';
 
 class AppLocalStorage {
   late final GetStorage _storage;

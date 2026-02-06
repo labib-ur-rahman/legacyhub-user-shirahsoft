@@ -7,6 +7,7 @@
 ///
 /// Note: ApiResponse and ApiError are defined in http_client.dart
 /// ============================================================================
+library;
 
 /// API Meta information for pagination and additional data
 /// Used with paginated API responses to provide navigation info

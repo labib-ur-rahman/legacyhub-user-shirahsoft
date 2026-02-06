@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project_template/core/utils/theme/custom_themes/appbar_theme.dart';
+import 'package:legacyhub/core/utils/theme/custom_themes/appbar_theme.dart';
 
 /// Dynamic Status Bar Widget
 /// Automatically adjusts status bar style based on background color

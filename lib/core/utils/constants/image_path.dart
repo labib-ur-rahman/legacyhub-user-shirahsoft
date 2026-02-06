@@ -3,6 +3,8 @@ class ImagePath {
   ImagePath._();
 
   /// -- App Images
-  static const String teamLogo = 'assets/images/team-logo.jpeg';
+  static const String teamLogo = 'assets/images/logo.png';
+  static const String appLogo = 'assets/images/logo.png';
 
+  static const String dotLine = 'assets/images/dot-line.png';
 }

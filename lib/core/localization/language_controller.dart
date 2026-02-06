@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:project_template/core/localization/languages.dart';
+import 'package:legacyhub/core/localization/languages.dart';
 
 /// Language Controller for managing app language settings
 /// Handles language switching, persistence, and system locale detection

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:project_template/app.dart';
+import 'package:legacyhub/app.dart';
+import 'package:legacyhub/firebase_options.dart';
 
 import 'core/services/local_storage_service.dart';
 import 'core/services/logger_service.dart';
@@ -13,6 +15,9 @@ import 'core/utils/http/http_client.dart';
 void main() async {
   // Ensure Flutter widgets are initialized
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Initialize GetStorage for local data persistence
   await GetStorage.init();

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SvgIconHelper {
+  SvgIconHelper._();
+
   static Widget buildIcon({
     required String assetPath,
     double? width,
@@ -12,8 +15,8 @@ class SvgIconHelper {
   }) {
     return SvgPicture.asset(
       assetPath,
-      width: width ?? AppSizes.szW24,
-      height: height ?? AppSizes.szH24,
+      width: width ?? 24.w,
+      height: height ?? 24.h,
       colorFilter: color != null
           ? ColorFilter.mode(color, BlendMode.srcIn)
           : null,
@@ -32,8 +35,8 @@ class SvgIconHelper {
   }) {
     final iconWidget = buildIcon(
       assetPath: assetPath,
-      width: width ?? AppSizes.szW24,
-      height: height ?? AppSizes.szH24,
+      width: width ?? 24.w,
+      height: height ?? 24.h,
       color: color,
       fit: fit,
     );
@@ -44,11 +47,4 @@ class SvgIconHelper {
 
     return iconWidget;
   }
-}
-
-class AppSizes {
-  static const double szW20 = 20.0;
-  static const double szH20 = 20.0;
-  static const double szW24 = 24.0;
-  static const double szH24 = 24.0;
 }

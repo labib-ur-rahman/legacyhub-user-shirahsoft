@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:project_template/core/utils/constants/colors.dart';
-import 'package:project_template/core/utils/constants/sizes.dart';
+import 'package:legacyhub/core/utils/constants/colors.dart';
+import 'package:legacyhub/core/utils/constants/sizes.dart';
 
 /// Lottie Animation
 /// A widget for displaying an animated loading indicator with optional text and action button.

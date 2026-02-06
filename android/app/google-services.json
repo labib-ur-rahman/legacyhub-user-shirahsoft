@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "95177033076",
+    "project_id": "legacyhub-shirahsoft",
+    "storage_bucket": "legacyhub-shirahsoft.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95177033076:android:2f7818d72c9505c1f35821",
+        "android_client_info": {
+          "package_name": "com.shirahsoft.legacyhub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsocYV2b2OphkNOVABK50rUOB6E0HoqDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
