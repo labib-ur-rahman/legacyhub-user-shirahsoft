@@ -42,7 +42,7 @@ class WalletTab extends StatelessWidget {
                         'Available Balance',
                         style: getTextStyle(
                           fontSize: 14,
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: 0.8),
                         ),
                       ),
                       SizedBox(height: 8.h),
@@ -87,7 +87,9 @@ class WalletTab extends StatelessWidget {
                     color: AppStyleColors.instance.surface,
                     borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(
-                      color: AppStyleColors.instance.secondary.withOpacity(0.3),
+                      color: AppStyleColors.instance.secondary.withValues(
+                        alpha: 0.3,
+                      ),
                     ),
                   ),
                   child: Row(
@@ -152,8 +154,8 @@ class WalletTab extends StatelessWidget {
                     color: AppStyleColors.instance.surface,
                     borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(
-                      color: AppStyleColors.instance.borderFocused.withOpacity(
-                        0.2,
+                      color: AppStyleColors.instance.borderFocused.withValues(
+                        alpha: 0.2,
                       ),
                     ),
                   ),
@@ -197,7 +199,7 @@ class _WalletActionButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(8.r),
         ),
         child: Row(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:legacyhub/core/utils/constants/colors.dart';
-import 'package:legacyhub/core/utils/helpers/app_helper.dart';
+import 'package:legacyhub/core/utils/helpers/app_helper_functions.dart';
 
 class AppSnackBar {
   static hideSnackBar() =>

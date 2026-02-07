@@ -47,7 +47,7 @@ const Map<String, String> bnBD = {
   // ==================== Onboarding ====================
   'choose_theme': 'আপনার থিম বেছে নিন',
   'choose_theme_subtitle':
-      'আমরা ডার্ক থিম সুপারিশ করি - চোখের জন্য আরামদায়ক এবং ব্যাটারি সাশ্রয় করে। সেটিংসে পরে পরিবর্তন করতে পারবেন।',
+      'আমরা ডার্ক থিম ব্যবহারের পরামর্শ দিই — এটি চোখের জন্য আরামদায়ক এবং ব্যাটারিও সাশ্রয় করে। আপনি পরে সেটিংস থেকে এটি পরিবর্তন করতে পারবেন।',
   'dark_theme': 'ডার্ক',
   'light_theme': 'লাইট',
   'system_theme': 'সিস্টেম',
@@ -55,7 +55,8 @@ const Map<String, String> bnBD = {
   'light_theme_desc': 'উজ্জ্বল এবং পরিষ্কার',
   'system_theme_desc': 'সিস্টেম সেটিংস অনুসরণ করুন',
   'choose_language': 'আপনার ভাষা নির্বাচন করুন',
-  'choose_language_subtitle': 'আপনার পছন্দের ভাষা নির্বাচন করুন',
+  'choose_language_subtitle':
+      'LegacyHub ইংরেজি ও বাংলা — দুই ভাষাতেই উপলব্ধ। চালিয়ে যেতে আপনার পছন্দের ভাষা নির্বাচন করুন।',
   'english': 'English',
   'bangla': 'বাংলা',
   'english_desc': 'English (US)',

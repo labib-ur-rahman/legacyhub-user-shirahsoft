@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
 import 'package:legacyhub/core/services/connectivity_service.dart';
 import 'package:legacyhub/core/services/firebase_service.dart';
+import 'package:legacyhub/core/utils/manager/network_manager.dart';
 import 'package:legacyhub/features/authentication/controllers/auth_controller.dart';
 import 'package:legacyhub/features/home/controllers/home_controller.dart';
 import 'package:legacyhub/features/main/controllers/main_header_controller.dart';
 import 'package:legacyhub/features/onboarding/controllers/style_controller.dart';
+import 'package:legacyhub/features/onboarding/controllers/theme_controller.dart';
 import 'package:legacyhub/features/profile/controllers/user_controller.dart';
 import 'package:legacyhub/features/rewards/controllers/reward_controller.dart';
 import 'package:legacyhub/features/wallet/controllers/wallet_controller.dart';
@@ -19,12 +21,16 @@ class InitialBinding extends Bindings {
     Get.put<FirebaseService>(FirebaseService(), permanent: true);
 
     // ==================== Core Services ====================
+    // Network Manager - Internet connectivity monitoring
+    Get.put<NetworkManager>(NetworkManager(), permanent: true);
+
     // Connectivity Service - Network monitoring
     Get.put<ConnectivityService>(ConnectivityService(), permanent: true);
 
     // ==================== Onboarding ====================
     // Style Controller - App style management
     Get.put<StyleController>(StyleController(), permanent: true);
+    Get.put<ThemeController>(ThemeController(), permanent: true);
 
     // ==================== Main Navigation ====================
     // Main Header Controller - Tab bar navigation

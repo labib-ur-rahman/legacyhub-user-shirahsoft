@@ -3,7 +3,7 @@ import 'package:legacyhub/core/utils/constants/colors.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:legacyhub/core/utils/constants/sizes.dart';
 import 'package:legacyhub/core/utils/device/device_utility.dart';
-import 'package:legacyhub/core/utils/helpers/app_helper.dart';
+import 'package:legacyhub/core/utils/helpers/app_helper_functions.dart';
 
 class SLSearchContainer extends StatelessWidget {
   const SLSearchContainer({

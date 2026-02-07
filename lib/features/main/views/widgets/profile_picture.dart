@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:legacyhub/core/utils/helpers/app_helper.dart';
+import 'package:legacyhub/core/utils/helpers/app_helper_functions.dart';
 
 /// Profile picture widget with circular shape and cached image
 /// Used in main tab bar for the Profile tab

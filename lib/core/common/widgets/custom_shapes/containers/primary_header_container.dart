@@ -19,8 +19,8 @@ class SLPrimaryHeaderContainer extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         child: Stack(
           children: [
-            Positioned(top: -150, right: -250, child: SLCircularContainer(backgroundColor: AppColors.textWhite.withOpacity(0.1),),),
-            Positioned(top: 100, right: -300, child: SLCircularContainer(backgroundColor: AppColors.textWhite.withOpacity(0.1),),),
+            Positioned(top: -150, right: -250, child: SLCircularContainer(backgroundColor: AppColors.textWhite.withValues(alpha: 0.1),),),
+            Positioned(top: 100, right: -300, child: SLCircularContainer(backgroundColor: AppColors.textWhite.withValues(alpha: 0.1),),),
             child,
           ],
         ),

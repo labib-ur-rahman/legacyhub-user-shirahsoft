@@ -142,7 +142,7 @@ class _StatCard extends StatelessWidget {
           color: AppStyleColors.instance.surface,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
-            color: AppStyleColors.instance.borderFocused.withOpacity(0.2),
+            color: AppStyleColors.instance.borderFocused.withValues(alpha: 0.2),
           ),
         ),
         child: Column(
@@ -188,7 +188,7 @@ class _ServiceCard extends StatelessWidget {
           color: AppStyleColors.instance.surface,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
-            color: AppStyleColors.instance.borderFocused.withOpacity(0.2),
+            color: AppStyleColors.instance.borderFocused.withValues(alpha: 0.2),
           ),
         ),
         child: Column(

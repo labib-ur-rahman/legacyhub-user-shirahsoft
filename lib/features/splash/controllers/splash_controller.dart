@@ -1,211 +1,249 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:legacyhub/core/common/widgets/appbar/custom_app_bar.dart';
+import 'package:legacyhub/core/services/firebase_service.dart';
 import 'package:legacyhub/core/services/local_storage_service.dart';
 import 'package:legacyhub/core/services/logger_service.dart';
+import 'package:legacyhub/core/utils/manager/network_manager.dart';
+import 'package:legacyhub/data/repositories/user_repository.dart';
 import 'package:legacyhub/routes/app_routes.dart';
 
-/// Splash Controller - Manages splash screen animations and navigation logic
+/// Splash Controller - Handles app initialization and navigation logic
 ///
-/// Responsibilities:
-/// - Control splash screen animations
-/// - Check first-time user status
-/// - Check user authentication status
-/// - Navigate to appropriate screen based on user state
-///
-/// Navigation Flow:
-/// 1. First-time user → Theme Selection → Language Selection → Login
-/// 2. Returning user (not logged in) → Login
-/// 3. Logged in user → Main Screen
-class SplashController extends GetxController with GetTickerProviderStateMixin {
+/// Flow:
+/// 1. Check internet connection
+/// 2. Check if first time user → Language screen
+/// 3. Check authentication status
+/// 4. Check user account status → Navigate accordingly
+class SplashController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   static SplashController get instance => Get.find();
 
-  // Animation controllers for each stage
-  late AnimationController circle1Controller;
-  late AnimationController circle2Controller;
-  late AnimationController logoController;
-  late AnimationController dotLineController;
-  late AnimationController circularDotsController;
+  // ==================== Dependencies ====================
+  final _firebase = FirebaseService.instance;
+  final _network = NetworkManager.instance;
+  final _userRepository = UserRepository();
 
-  // Animations
-  late Animation<double> circle1Scale;
-  late Animation<double> circle1Opacity;
-  late Animation<double> circle2Scale;
-  late Animation<double> circle2Opacity;
-  late Animation<double> logoScale;
-  late Animation<double> logoOpacity;
-  late Animation<double> dotLineOpacity;
-  late Animation<double> circularDotsOpacity;
+  // ==================== Animation Controllers ====================
+  late AnimationController animationController;
 
-  // Loading state
-  final RxBool isNavigating = false.obs;
+  // ==================== Observables ====================
+  final _isInitializing = true.obs;
 
+  // Navigation guard to prevent multiple navigations
+  bool _hasNavigated = false;
+
+  // ==================== Getters ====================
+  bool get isInitializing => _isInitializing.value;
+
+  // ==================== Lifecycle ====================
   @override
   void onInit() {
     super.onInit();
     _initializeAnimations();
-    _startAnimationSequence();
-  }
-
-  /// Initialize all animation controllers and animations
-  void _initializeAnimations() {
-    // Stage 2: First circle (175x175)
-    circle1Controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-    circle1Scale = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: circle1Controller, curve: Curves.easeOutBack),
-    );
-    circle1Opacity = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(parent: circle1Controller, curve: Curves.easeIn));
-
-    // Stage 3: Second circle (371x371)
-    circle2Controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-    circle2Scale = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: circle2Controller, curve: Curves.easeOutBack),
-    );
-    circle2Opacity = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(parent: circle2Controller, curve: Curves.easeIn));
-
-    // Stage 4: Logo
-    logoController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    );
-    logoScale = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: logoController, curve: Curves.elasticOut),
-    );
-    logoOpacity = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(parent: logoController, curve: Curves.easeIn));
-
-    // Stage 5: Dot line
-    dotLineController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-    dotLineOpacity = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(parent: dotLineController, curve: Curves.easeIn));
-
-    // Stage 6: Circular dots
-    circularDotsController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    );
-    circularDotsOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: circularDotsController, curve: Curves.easeIn),
-    );
-  }
-
-  /// Start the animation sequence and handle navigation
-  Future<void> _startAnimationSequence() async {
-    try {
-      // Stage 1: Blank page (500ms)
-      await Future.delayed(const Duration(milliseconds: 500));
-
-      // Stage 2: First circle appears
-      await circle1Controller.forward();
-      await Future.delayed(const Duration(milliseconds: 300));
-
-      // Stage 3: Second circle appears
-      await circle2Controller.forward();
-      await Future.delayed(const Duration(milliseconds: 300));
-
-      // Stage 4: Logo appears
-      await logoController.forward();
-      await Future.delayed(const Duration(milliseconds: 400));
-
-      // Stage 5: Dot line appears
-      await dotLineController.forward();
-      await Future.delayed(const Duration(milliseconds: 300));
-
-      // Stage 6: Circular dots appear
-      await circularDotsController.forward();
-      await Future.delayed(const Duration(milliseconds: 1000));
-
-      // Navigate based on user state
-      await _navigateToNextScreen();
-    } catch (error) {
-      LoggerService.error('Splash animation error', error);
-      // Fallback navigation in case of error
-      await _navigateToNextScreen();
-    }
-  }
-
-  /// Determine and navigate to the appropriate screen
-  Future<void> _navigateToNextScreen() async {
-    if (isNavigating.value) return;
-    isNavigating.value = true;
-
-    try {
-      // Check if user is first-time
-      final isFirstTime = LocalStorageService.isFirstTime();
-      LoggerService.info('Is first time user: $isFirstTime');
-
-      if (isFirstTime) {
-        // First-time user → Go to theme selection
-        LoggerService.info('Navigating to Theme Screen');
-        Get.offAllNamed(AppRoutes.getLoginScreen());
-        return;
-      }
-
-      // Check if user is logged in
-      final isLoggedIn = await _checkLoginStatus();
-      LoggerService.info('Is user logged in: $isLoggedIn');
-
-      if (isLoggedIn) {
-        // Logged in user → Go to main screen
-        LoggerService.info('Navigating to Main Screen');
-        Get.offAllNamed(AppRoutes.getMainScreen());
-      } else {
-        // Not logged in → Go to login screen
-        LoggerService.info('Navigating to Login Screen');
-        Get.offAll(()=> const CustomAppBar(pageTitle: "Home",));
-        // Get.offAllNamed(AppRoutes.getHomeScreen());
-      }
-    } catch (error) {
-      LoggerService.error('Navigation error', error);
-      // Default fallback to login
-      Get.offAllNamed(AppRoutes.getLoginScreen());
-    } finally {
-      isNavigating.value = false;
-    }
-  }
-
-  /// Check if user is logged in
-  /// TODO: Implement actual authentication check
-  Future<bool> _checkLoginStatus() async {
-    try {
-      // Check for access token or user session
-      // For now, returning false as a placeholder
-      // Replace with actual authentication logic
-      final accessToken = await LocalStorageService.getAccessToken();
-      return accessToken != null && accessToken.isNotEmpty;
-    } catch (error) {
-      LoggerService.error('Error checking login status', error);
-      return false;
-    }
+    _startSplashSequence();
   }
 
   @override
   void onClose() {
-    // Dispose all animation controllers
-    circle1Controller.dispose();
-    circle2Controller.dispose();
-    logoController.dispose();
-    dotLineController.dispose();
-    circularDotsController.dispose();
+    animationController.dispose();
     super.onClose();
+  }
+
+  // ==================== Initialization ====================
+  /// Initialize animation controller
+  void _initializeAnimations() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2000),
+    );
+    animationController.forward();
+  }
+
+  /// Start splash sequence
+  Future<void> _startSplashSequence() async {
+    try {
+      LoggerService.info('🚀 Splash: Starting initialization sequence');
+
+      // Wait minimum splash duration for animations
+      await Future.delayed(const Duration(milliseconds: 3000));
+
+      // Step 1: Check internet connection
+      final isConnected = await _checkInternetConnection();
+      if (!isConnected) {
+        LoggerService.warning('⚠️ Splash: No internet connection');
+        // Stay on splash, NetworkManager will show popup
+        return;
+      }
+
+      // Step 2: Check if first time user
+      final isFirstTime = await _checkFirstTimeUser();
+      if (isFirstTime) {
+        LoggerService.info('👤 Splash: First time user detected');
+        await _navigateToLanguageSelection();
+        return;
+      }
+
+      // Step 3: Check authentication
+      final isAuthenticated = _checkAuthentication();
+      if (!isAuthenticated) {
+        LoggerService.info('🔐 Splash: User not authenticated');
+        await _navigateToLogin();
+        return;
+      }
+
+      // Step 4: Check account status
+      await _checkAccountStatus();
+    } catch (e, stackTrace) {
+      LoggerService.error(
+        '❌ Splash: Error during initialization',
+        e,
+        stackTrace,
+      );
+      // On error, navigate to login as fallback
+      await _navigateToLogin();
+    } finally {
+      _isInitializing.value = false;
+    }
+  }
+
+  // ==================== Navigation Checks ====================
+  /// Check internet connection
+  Future<bool> _checkInternetConnection() async {
+    try {
+      LoggerService.debug('🌐 Splash: Checking internet connection');
+      final isConnected = await _network.isConnected();
+      return isConnected;
+    } catch (e) {
+      LoggerService.error('❌ Splash: Failed to check internet', e);
+      return false;
+    }
+  }
+
+  /// Check if first time user
+  Future<bool> _checkFirstTimeUser() async {
+    try {
+      LoggerService.debug('📱 Splash: Checking first time status');
+      final isFirstTime = LocalStorageService.isFirstTime();
+      return isFirstTime;
+    } catch (e) {
+      LoggerService.error('❌ Splash: Failed to check first time status', e);
+      return false;
+    }
+  }
+
+  /// Check authentication status
+  bool _checkAuthentication() {
+    try {
+      LoggerService.debug('🔐 Splash: Checking authentication status');
+      return _firebase.isAuthenticated;
+    } catch (e) {
+      LoggerService.error('❌ Splash: Failed to check authentication', e);
+      return false;
+    }
+  }
+
+  /// Check user account status from Firestore
+  Future<void> _checkAccountStatus() async {
+    try {
+      LoggerService.debug('🔍 Splash: Checking user account status');
+
+      // Get current user from Firestore
+      final user = await _userRepository.getCurrentUser();
+
+      if (user == null) {
+        LoggerService.warning('⚠️ Splash: User document not found');
+        await _handleInvalidAccount();
+        return;
+      }
+
+      // Check account state
+      if (user.status.isActive) {
+        LoggerService.info('✅ Splash: Account is active');
+        await _navigateToMain();
+      } else if (user.status.isBanned ||
+          user.status.isSuspended ||
+          user.status.isDeleted) {
+        LoggerService.warning(
+          '⛔ Splash: Account is ${user.status.accountState}',
+        );
+        await _handleInvalidAccount();
+      } else {
+        LoggerService.warning('⚠️ Splash: Unknown account state');
+        await _handleInvalidAccount();
+      }
+    } catch (e, stackTrace) {
+      LoggerService.error(
+        '❌ Splash: Failed to check account status',
+        e,
+        stackTrace,
+      );
+      // On error, try to navigate to main (let main screen handle it)
+      await _navigateToMain();
+    }
+  }
+
+  /// Handle invalid account (banned/suspended/deleted)
+  Future<void> _handleInvalidAccount() async {
+    try {
+      LoggerService.info('🚪 Splash: Logging out invalid account');
+      // Sign out user
+      await _firebase.auth.signOut();
+      // Navigate to login
+      await _navigateToLogin();
+    } catch (e, stackTrace) {
+      LoggerService.error(
+        '❌ Splash: Failed to logout invalid account',
+        e,
+        stackTrace,
+      );
+      await _navigateToLogin();
+    }
+  }
+
+  // ==================== Navigation Methods ====================
+  /// Navigate to language selection
+  Future<void> _navigateToLanguageSelection() async {
+    if (_hasNavigated) {
+      LoggerService.warning('⚠️ Splash: Navigation already occurred, skipping');
+      return;
+    }
+    _hasNavigated = true;
+    LoggerService.info('🌍 Splash: Navigating to language selection');
+    await Get.offNamed(AppRoutes.LANGUAGE_SELECTION);
+  }
+
+  /// Navigate to login screen
+  Future<void> _navigateToLogin() async {
+    if (_hasNavigated) {
+      LoggerService.warning('⚠️ Splash: Navigation already occurred, skipping');
+      return;
+    }
+    _hasNavigated = true;
+    LoggerService.info('🔐 Splash: Navigating to login');
+    await Get.offNamed(AppRoutes.LOGIN);
+  }
+
+  /// Navigate to main screen
+  Future<void> _navigateToMain() async {
+    if (_hasNavigated) {
+      LoggerService.warning('⚠️ Splash: Navigation already occurred, skipping');
+      return;
+    }
+    _hasNavigated = true;
+    LoggerService.info('🏠 Splash: Navigating to main screen');
+    await Get.offNamed(AppRoutes.MAIN);
+  }
+
+  // ==================== Public Methods ====================
+  /// Retry initialization (called when user taps on splash after error)
+  Future<void> retryInitialization() async {
+    if (_isInitializing.value) {
+      LoggerService.warning('⚠️ Splash: Initialization already in progress');
+      return;
+    }
+    LoggerService.info('🔄 Splash: Retrying initialization');
+    _hasNavigated = false; // Reset navigation flag
+    _isInitializing.value = true;
+    await _startSplashSequence();
   }
 }

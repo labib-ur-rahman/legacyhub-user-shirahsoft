@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:legacyhub/features/authentication/views/screens/login_screen.dart';
 import 'package:legacyhub/features/home/views/screens/home_screen.dart';
@@ -26,22 +27,25 @@ class AppPages {
 
     // ==================== Onboarding Screens ====================
     GetPage(
-      name: AppRoutes.THEME_SELECTION,
-      page: () => const ThemeScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 400),
-    ),
-    GetPage(
       name: AppRoutes.LANGUAGE_SELECTION,
       page: () => const LanguageScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 400),
+      transition: Transition.rightToLeftWithFade,
+      transitionDuration: const Duration(milliseconds: 600),
+      curve: Curves.easeInOut,
+    ),
+    GetPage(
+      name: AppRoutes.THEME_SELECTION,
+      page: () => const ThemeScreen(),
+      transition: Transition.rightToLeftWithFade,
+      transitionDuration: const Duration(milliseconds: 600),
+      curve: Curves.easeInOut,
     ),
     GetPage(
       name: AppRoutes.STYLE_SELECTION,
       page: () => const StyleScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 400),
+      transition: Transition.rightToLeftWithFade,
+      transitionDuration: const Duration(milliseconds: 600),
+      curve: Curves.easeInOut,
     ),
 
     // ==================== Authentication Screens ====================

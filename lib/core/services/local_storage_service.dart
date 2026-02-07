@@ -119,32 +119,45 @@ class LocalStorageService {
   ///   // Theme is now persisted and will be restored on next app launch
   static void setThemeMode(ThemeMode themeMode) {
     try {
-      _storage?.write(_keyThemeMode, themeMode.index);
-      LoggerService.info('💾 Theme mode saved: ${themeMode.name}');
+      // Never save system mode - convert to light
+      final modeToSave = themeMode == ThemeMode.system
+          ? ThemeMode.light
+          : themeMode;
+      _storage?.write(_keyThemeMode, modeToSave.index);
+      LoggerService.info('Theme mode saved: ${modeToSave.name}');
     } catch (e) {
-      LoggerService.error('❌ Failed to save theme mode', e);
+      LoggerService.error('Failed to save theme mode', e);
     }
   }
 
   /// Retrieve saved theme mode from storage
-  /// Returns ThemeMode.system as default fallback
+  /// Returns ThemeMode.light as default fallback (never System mode)
   ///
   /// Returns:
-  ///   The saved ThemeMode, or ThemeMode.system if not found or on error
+  ///   The saved ThemeMode, or ThemeMode.light if not found or on error
   ///
   /// Example:
   ///   final theme = LocalStorageService.getThemeMode();
   ///   // Returns: ThemeMode.dark (if previously saved)
-  ///   // Returns: ThemeMode.system (if no theme saved)
+  ///   // Returns: ThemeMode.light (if no theme saved or system mode detected)
   static ThemeMode getThemeMode() {
     try {
       final index = _storage?.read(_keyThemeMode) ?? 0;
       final themeMode = ThemeMode.values[index];
-      LoggerService.info('📖 Theme mode retrieved: ${themeMode.name}');
+
+      // Never return system mode - convert to light
+      if (themeMode == ThemeMode.system) {
+        LoggerService.info(
+          'Theme mode retrieved: system - converting to light',
+        );
+        return ThemeMode.light;
+      }
+
+      LoggerService.info('Theme mode retrieved: ${themeMode.name}');
       return themeMode;
     } catch (e) {
-      LoggerService.error('❌ Failed to get theme mode', e);
-      return ThemeMode.system; // Default fallback
+      LoggerService.error('Failed to get theme mode', e);
+      return ThemeMode.light; // Default fallback is light, not system
     }
   }
 

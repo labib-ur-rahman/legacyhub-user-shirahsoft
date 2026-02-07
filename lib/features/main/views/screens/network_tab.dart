@@ -86,7 +86,7 @@ class NetworkTab extends StatelessWidget {
                         'Your Invite Code',
                         style: getTextStyle(
                           fontSize: 12,
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: 0.8),
                         ),
                       ),
                       SizedBox(height: 8.h),
@@ -96,10 +96,10 @@ class NetworkTab extends StatelessWidget {
                           vertical: 8.h,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(8.r),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withValues(alpha: 0.3),
                           ),
                         ),
                         child: Row(
@@ -177,8 +177,8 @@ class NetworkTab extends StatelessWidget {
                     color: AppStyleColors.instance.surface,
                     borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(
-                      color: AppStyleColors.instance.borderFocused.withOpacity(
-                        0.2,
+                      color: AppStyleColors.instance.borderFocused.withValues(
+                        alpha: 0.2,
                       ),
                     ),
                   ),
@@ -204,7 +204,7 @@ class NetworkTab extends StatelessWidget {
                           style: getTextStyle(
                             fontSize: 12,
                             color: AppStyleColors.instance.textSecondary
-                                .withOpacity(0.7),
+                                .withValues(alpha: 0.7),
                           ),
                         ),
                       ],
@@ -237,7 +237,7 @@ class _NetworkStatCard extends StatelessWidget {
         color: AppStyleColors.instance.surface,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
-          color: AppStyleColors.instance.borderFocused.withOpacity(0.2),
+          color: AppStyleColors.instance.borderFocused.withValues(alpha: 0.2),
         ),
       ),
       child: Column(

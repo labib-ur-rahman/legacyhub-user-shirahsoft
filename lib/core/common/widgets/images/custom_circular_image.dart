@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:legacyhub/core/common/widgets/shimmers/shimmer.dart';
 import 'package:legacyhub/core/utils/constants/colors.dart';
 import 'package:legacyhub/core/utils/constants/sizes.dart';
-import 'package:legacyhub/core/utils/helpers/app_helper.dart';
+import 'package:legacyhub/core/utils/helpers/app_helper_functions.dart';
 
 class AppCircularImage extends StatelessWidget {
   const AppCircularImage({

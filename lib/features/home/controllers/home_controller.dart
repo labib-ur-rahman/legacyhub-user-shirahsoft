@@ -7,13 +7,5 @@ class HomeController extends GetxController {
 
   // ==================== Lifecycle Methods ====================
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 }

@@ -7,7 +7,7 @@ import 'package:legacyhub/routes/app_routes.dart';
 /// Theme Controller - Manages theme selection during onboarding
 ///
 /// Responsibilities:
-/// - Handle theme selection (Dark, Light, System)
+/// - Handle theme selection (Dark, Light only - NO System mode)
 /// - Persist theme preference
 /// - Apply theme to the app
 /// - Navigate to language selection screen
@@ -16,9 +16,6 @@ class ThemeController extends GetxController {
 
   // Selected theme mode (reactive) - defaults to light
   final Rx<ThemeMode> selectedTheme = ThemeMode.light.obs;
-
-  // Track if system theme was changed
-  final RxBool hasChangedTheme = false.obs;
 
   @override
   void onInit() {
@@ -30,17 +27,30 @@ class ThemeController extends GetxController {
   void _loadCurrentTheme() {
     try {
       final currentTheme = LocalStorageService.getThemeMode();
-      // Default to light if system mode
+      // Always default to light mode, never use system mode
       if (currentTheme == ThemeMode.system) {
         selectedTheme.value = ThemeMode.light;
-        Get.changeThemeMode(ThemeMode.light);
+        LocalStorageService.setThemeMode(ThemeMode.light);
+        applyTheme(ThemeMode.light);
       } else {
         selectedTheme.value = currentTheme;
+        applyTheme(currentTheme);
       }
       LoggerService.info('Current theme loaded: ${selectedTheme.value.name}');
     } catch (error) {
       LoggerService.error('Error loading theme', error);
       selectedTheme.value = ThemeMode.light;
+      LocalStorageService.setThemeMode(ThemeMode.light);
+      applyTheme(ThemeMode.light);
+    }
+  }
+
+  /// Apply theme immediately to the app
+  void applyTheme(ThemeMode themeMode) {
+    try {
+      Get.changeThemeMode(themeMode);
+    } catch (e) {
+      LoggerService.error('Error applying theme', e);
     }
   }
 
@@ -49,20 +59,15 @@ class ThemeController extends GetxController {
     try {
       selectedTheme.value = themeMode;
 
-      // Apply theme immediately
-      Get.changeThemeMode(themeMode);
-
-      // Save to storage
+      // Save to storage first
       LocalStorageService.setThemeMode(themeMode);
 
-      // Mark that theme has been changed (disables system theme option)
-      if (themeMode != ThemeMode.system) {
-        hasChangedTheme.value = true;
-      }
+      // Apply theme immediately
+      applyTheme(themeMode);
 
       LoggerService.info('Theme changed to: ${themeMode.name}');
     } catch (error) {
-      Get.changeThemeMode(ThemeMode.light);
+      applyTheme(ThemeMode.light);
       LoggerService.error('Error selecting theme', error);
     }
   }
@@ -78,13 +83,10 @@ class ThemeController extends GetxController {
       case ThemeMode.dark:
         return 'assets/lottie/dark_night.json';
       case ThemeMode.light:
-        return 'assets/lottie/light_sun_spin.json';
       case ThemeMode.system:
-        // Determine based on system brightness
-        final brightness = Get.theme.brightness;
-        return brightness == Brightness.dark
-            ? 'assets/lottie/dark_night.json'
-            : 'assets/lottie/light_sun_spin.json';
+      // ignore: unreachable_switch_default
+      default:
+        return 'assets/lottie/light_sun_spin.json';
     }
   }
 
@@ -94,12 +96,9 @@ class ThemeController extends GetxController {
       case ThemeMode.dark:
         return const Color(0xFF1A1A2E);
       case ThemeMode.light:
-        return const Color(0xFFEEEFFC);
       case ThemeMode.system:
-        // final brightness = Get.theme.brightness;
-        // return brightness == Brightness.dark
-        //     ? const Color(0xFF1A1A2E)
-        //     : const Color(0xFFEEEFFC);
+      // ignore: unreachable_switch_default
+      default:
         return const Color(0xFFEEEFFC);
     }
   }
@@ -114,18 +113,24 @@ class ThemeController extends GetxController {
     }
   }
 
-  /// Skip theme selection and go to language screen with system theme
+  /// Skip theme selection and navigate to next screen
   void skipThemeSelection() {
     try {
-      // Save current selection and close screen
+      // Save current selection
       LocalStorageService.setThemeMode(selectedTheme.value);
-      LoggerService.info('Theme saved: ${selectedTheme.value.name}');
+      // Ensure theme is applied immediately
+      applyTheme(selectedTheme.value);
+      LoggerService.info(
+        'Theme saved and applied: ${selectedTheme.value.name}',
+      );
 
-      // Go back to previous screen
-      Get.back();
+      // Small delay to ensure theme is fully applied before navigation
+      Future.delayed(const Duration(milliseconds: 100), () {
+        Get.toNamed(AppRoutes.LANGUAGE_SELECTION);
+      });
     } catch (error) {
       LoggerService.error('Error saving theme selection', error);
-      Get.back();
+      Get.toNamed(AppRoutes.LANGUAGE_SELECTION);
     }
   }
 }

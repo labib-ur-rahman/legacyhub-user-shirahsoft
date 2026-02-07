@@ -7,8 +7,8 @@ import 'package:legacyhub/core/bindings/initial_binding.dart';
 import 'package:legacyhub/core/localization/languages.dart';
 import 'package:legacyhub/core/services/local_storage_service.dart';
 import 'package:legacyhub/core/utils/theme/theme.dart';
-import 'package:legacyhub/features/main/views/screens/main_screen.dart';
 import 'package:legacyhub/routes/app_pages.dart';
+import 'package:legacyhub/routes/app_routes.dart';
 
 /// Root widget of the application
 class MyApp extends StatelessWidget {
@@ -45,8 +45,7 @@ class MyApp extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
 
           // Routing configuration
-          // initialRoute: AppRoutes.SPLASH,
-          home: MainScreen(),
+          initialRoute: AppRoutes.SPLASH,
           getPages: AppPages.routes,
           initialBinding: InitialBinding(),
 

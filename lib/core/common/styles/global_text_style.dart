@@ -87,6 +87,23 @@ TextStyle getLabelTextStyle({
 
 /// -- K2D Bold Text (Premium Heading Font)
 /// Used for: App bar titles, premium headings, brand elements
+TextStyle getHindSiliguriTextStyle({
+  double fontSize = 24.0,
+  FontWeight fontWeight = FontWeight.w700,
+  double lineHeight = 1.20,
+  TextAlign textAlign = TextAlign.start,
+  Color color = AppColors.dark,
+}) {
+  return GoogleFonts.hindSiliguri(
+    fontSize: fontSize.sp,
+    fontWeight: fontWeight,
+    height: lineHeight.h,
+    color: color,
+  );
+}
+
+/// -- K2D Bold Text (Premium Heading Font)
+/// Used for: App bar titles, premium headings, brand elements
 TextStyle getK2DTextStyle({
   double fontSize = 24.0,
   FontWeight fontWeight = FontWeight.w700,

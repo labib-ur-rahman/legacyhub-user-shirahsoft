@@ -32,8 +32,8 @@ class ShopTab extends StatelessWidget {
                     color: AppStyleColors.instance.surface,
                     borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(
-                      color: AppStyleColors.instance.borderFocused.withOpacity(
-                        0.2,
+                      color: AppStyleColors.instance.borderFocused.withValues(
+                        alpha: 0.2,
                       ),
                     ),
                   ),
@@ -169,7 +169,7 @@ class _CategoryCard extends StatelessWidget {
         color: AppStyleColors.instance.surface,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
-          color: AppStyleColors.instance.borderFocused.withOpacity(0.2),
+          color: AppStyleColors.instance.borderFocused.withValues(alpha: 0.2),
         ),
       ),
       child: Column(
@@ -208,7 +208,7 @@ class _ProductCard extends StatelessWidget {
         color: AppStyleColors.instance.surface,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
-          color: AppStyleColors.instance.borderFocused.withOpacity(0.2),
+          color: AppStyleColors.instance.borderFocused.withValues(alpha: 0.2),
         ),
       ),
       child: Column(
@@ -222,8 +222,8 @@ class _ProductCard extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  AppStyleColors.instance.primary.withOpacity(0.2),
-                  AppStyleColors.instance.secondary.withOpacity(0.2),
+                  AppStyleColors.instance.primary.withValues(alpha: 0.2),
+                  AppStyleColors.instance.secondary.withValues(alpha: 0.2),
                 ],
               ),
               borderRadius: BorderRadius.only(

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:legacyhub/core/services/local_storage_service.dart';
 import 'package:legacyhub/core/services/logger_service.dart';
+import 'package:legacyhub/routes/app_routes.dart';
 
 /// Onboarding Language Controller - Manages language selection during onboarding
 ///
@@ -72,18 +73,18 @@ class OnboardingLanguageController extends GetxController {
     }
   }
 
-  /// Complete onboarding and close the screen
+  /// Complete onboarding and navigate to theme selection screen
   Future<void> completeOnboarding() async {
     try {
       LoggerService.info(
         'Language selection completed: ${selectedLanguage.value.languageCode}',
       );
 
-      // Save and close screen
-      Get.back();
+      // Navigate to theme selection screen
+      Get.toNamed(AppRoutes.THEME_SELECTION);
     } catch (error) {
       LoggerService.error('Error completing language selection', error);
-      Get.back();
+      Get.toNamed(AppRoutes.THEME_SELECTION);
     }
   }
 

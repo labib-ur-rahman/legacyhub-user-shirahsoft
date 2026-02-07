@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:legacyhub/core/utils/constants/colors.dart';
-import 'package:legacyhub/core/utils/helpers/app_helper.dart';
+import 'package:legacyhub/core/utils/helpers/app_helper_functions.dart';
 
 class AppShimmerEffect extends StatelessWidget {
   const AppShimmerEffect({

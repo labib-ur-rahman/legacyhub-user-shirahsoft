@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:legacyhub/core/utils/helpers/app_helper.dart';
+import 'package:legacyhub/core/utils/helpers/app_helper_functions.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/device/device_utility.dart';
 
