@@ -7,16 +7,15 @@ class SvgIconHelper {
 
   static Widget buildIcon({
     required String assetPath,
-    double? width,
-    double? height,
+    double? size,
     Color? color,
     BoxFit fit = BoxFit.contain,
     VoidCallback? onTap,
   }) {
     return SvgPicture.asset(
       assetPath,
-      width: width ?? 24.w,
-      height: height ?? 24.h,
+      width: size ?? 24.w,
+      height: size ?? 24.h,
       colorFilter: color != null
           ? ColorFilter.mode(color, BlendMode.srcIn)
           : null,
@@ -27,16 +26,14 @@ class SvgIconHelper {
   // Enhanced version with tap handler
   static Widget buildIconWithTap({
     required String assetPath,
-    double? width,
-    double? height,
+    double? size,
     Color? color,
     VoidCallback? onTap,
     BoxFit fit = BoxFit.contain,
   }) {
     final iconWidget = buildIcon(
       assetPath: assetPath,
-      width: width ?? 24.w,
-      height: height ?? 24.h,
+      size: size ?? 24.w,
       color: color,
       fit: fit,
     );

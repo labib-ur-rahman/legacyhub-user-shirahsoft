@@ -5,6 +5,9 @@ class SvgPath {
   /// -- App SVGs
   static const String circularDot = 'assets/svg/circular-dot.svg';
   static const String arrowRight = 'assets/svg/arrow-right.svg';
+  static const String arrowLineRight = 'assets/svg/arrow-line-right.svg';
+  static const String arrowLineLeft = 'assets/svg/arrow-line-left.svg';
+
 
 
   /// Tab Bar SVGs
@@ -30,4 +33,7 @@ class SvgPath {
   static const String reactWow = "assets/svg/wow.svg";
   static const String reactSad = "assets/svg/sad.svg";
   static const String reactAngry = "assets/svg/angry.svg";
+
+  static const String icGoogle = "assets/svg/google.svg";
+
 }

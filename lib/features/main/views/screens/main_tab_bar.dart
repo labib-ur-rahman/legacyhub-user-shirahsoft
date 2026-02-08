@@ -106,8 +106,7 @@ class MainTabBar extends StatelessWidget {
                             onTap: () => controller.showInbox(),
                             child: SvgIconHelper.buildIcon(
                               assetPath: SvgPath.messageUnselected,
-                              width: 24.w,
-                              height: 24.h,
+                              size: 24.w,
                               color: Colors.white,
                             ),
                           ),
@@ -119,8 +118,7 @@ class MainTabBar extends StatelessWidget {
                             onTap: () => controller.openDrawer(),
                             child: SvgIconHelper.buildIcon(
                               assetPath: SvgPath.menu,
-                              width: 24.w,
-                              height: 24.h,
+                              size: 24.w,
                               color: Colors.white,
                             ),
                           ),

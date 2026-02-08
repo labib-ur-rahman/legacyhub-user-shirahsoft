@@ -12,7 +12,12 @@
           "package_name": "com.shirahsoft.legacyhub"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "95177033076-oav7umjsrdvbhlbhfntbg567ackec78k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDsocYV2b2OphkNOVABK50rUOB6E0HoqDQ"
@@ -20,7 +25,63 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "95177033076-oav7umjsrdvbhlbhfntbg567ackec78k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "95177033076-ea86p9uc0rnp367gidjjptgapo8o5719.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shirahsoft.legacyhub"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95177033076:android:cd5e20851a852389f35821",
+        "android_client_info": {
+          "package_name": "com.shirahsoft.legacyhub.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "95177033076-ihqvdtqbimg6752d8vqqsi78g0rn49va.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shirahsoft.legacyhub.admin",
+            "certificate_hash": "9d209981349f8da1786e63e33ca74eac19c02169"
+          }
+        },
+        {
+          "client_id": "95177033076-oav7umjsrdvbhlbhfntbg567ackec78k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsocYV2b2OphkNOVABK50rUOB6E0HoqDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "95177033076-oav7umjsrdvbhlbhfntbg567ackec78k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "95177033076-ea86p9uc0rnp367gidjjptgapo8o5719.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shirahsoft.legacyhub"
+              }
+            }
+          ]
         }
       }
     }

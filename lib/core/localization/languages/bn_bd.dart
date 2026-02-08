@@ -109,6 +109,57 @@ const Map<String, String> bnBD = {
   'upload_photo': 'ছবি আপলোড করুন',
   'change_photo': 'ছবি পরিবর্তন করুন',
 
+  // New Auth Flow
+  'auth_sign_in_title': 'আপনার অ্যাকাউন্টে সাইন ইন করুন',
+  'auth_sign_in_subtitle': 'লগইন করতে আপনার ইমেইল ও পাসওয়ার্ড দিন',
+  'auth_email_hint': 'ইমেইল',
+  'auth_password_hint': 'পাসওয়ার্ড',
+  'auth_password': 'পাসওয়ার্ড',
+  'auth_remember_me': 'আমাকে মনে রাখুন',
+  'auth_forgot_password': 'পাসওয়ার্ড ভুলে গেছেন?',
+  'auth_log_in': 'লগ ইন',
+  'auth_no_account': 'অ্যাকাউন্ট নেই? ',
+  'auth_sign_up': 'সাইন আপ',
+  'auth_or_login_with': 'অথবা লগইন করুন',
+  'auth_or': 'অথবা',
+  'auth_first_name': 'প্রথম নাম',
+  'auth_last_name_optional': 'শেষ নাম (ঐচ্ছিক)',
+  'auth_phone_hint': 'ফোন নম্বর',
+  'auth_confirm_password_hint': 'পাসওয়ার্ড নিশ্চিত করুন',
+  'auth_have_account': 'ইতিমধ্যে অ্যাকাউন্ট আছে? ',
+  'auth_forgot_password_title': 'পাসওয়ার্ড ভুলে গেছেন?',
+  'auth_forgot_password_desc':
+      'চিন্তা করবেন না! এটা হয়। অনুগ্রহ করে আপনার অ্যাকাউন্টের সাথে সংযুক্ত ইমেইল ঠিকানাটি লিখুন।',
+  'auth_email_address': 'ইমেইল ঠিকানা',
+  'auth_send_reset_link': 'রিসেট লিংক পাঠান',
+  'auth_back_to_login': 'লগইনে ফিরে যান',
+  'auth_check_email_title': 'আপনার ইমেইল চেক করুন!',
+  'auth_check_email_subtitle': 'আমরা পাসওয়ার্ড রিসেট লিংক পাঠিয়েছি:',
+  'auth_check_email_instructions':
+      'অনুগ্রহ করে আপনার ইনবক্স চেক করুন এবং নতুন পাসওয়ার্ড তৈরি করতে রিসেট লিংকে ক্লিক করুন। ইমেইল না দেখলে স্প্যাম ফোল্ডার চেক করুন।',
+  'auth_tip_label': 'টিপ:',
+  'auth_check_email_tip':
+      'রিসেট লিংকের মেয়াদ ১ ঘণ্টায় শেষ হবে। মেয়াদ শেষ হলে নতুন করে অনুরোধ করুন।',
+  'auth_didnt_receive_email': 'ইমেইল পাননি? ',
+  'auth_resend': 'পুনরায় পাঠান',
+  'auth_complete_profile': 'আপনার প্রোফাইল সম্পূর্ণ করুন',
+  'auth_complete_profile_desc':
+      'আপনার প্রোফাইল সম্পূর্ণ করতে ফোন নম্বর ও ইনভাইট কোড দিন।',
+  'auth_complete_signup': 'সাইনআপ সম্পূর্ণ করুন',
+  'auth_invite_code_tip':
+      'যিনি আপনাকে আমন্ত্রণ জানিয়েছেন তার কাছে ইনভাইট কোড চান। প্রতিটি অ্যাকাউন্টের জন্য একটি প্রয়োজন!',
+  'auth_cancel_signup': 'সাইনআপ বাতিল',
+  'auth_cancel_signup_desc':
+      'আপনি কি নিশ্চিত? আপনার গুগল অ্যাকাউন্ট সংযোগ বিচ্ছিন্ন হবে এবং আবার শুরু করতে হবে।',
+  'auth_stay': 'থাকুন',
+  'auth_leave': 'চলে যান',
+  'auth_login_success': 'সফলভাবে লগইন হয়েছে',
+  'auth_signup_success': 'অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে',
+  'auth_password_reset_sent': 'পাসওয়ার্ড রিসেট ইমেইল পাঠানো হয়েছে',
+  'auth_logout_success': 'সফলভাবে লগআউট হয়েছে',
+  'auth_validating_invite_code': 'ইনভাইট কোড যাচাই হচ্ছে...',
+  'auth_creating_account': 'আপনার অ্যাকাউন্ট তৈরি হচ্ছে...',
+
   // ==================== Wallet ====================
   'wallet': 'ওয়ালেট',
   'wallet_balance': 'ওয়ালেট ব্যালেন্স',
@@ -309,4 +360,32 @@ const Map<String, String> bnBD = {
   'payment_failed': 'পেমেন্ট ব্যর্থ',
   'payment_cancelled': 'পেমেন্ট বাতিল',
   'processing_payment': 'পেমেন্ট প্রক্রিয়াধীন',
+
+  // ==================== Onboarding Screens ====================
+  'ob_welcome_title': 'লেগ্যাসিহাবে স্বাগতম',
+  'ob_welcome_subtitle': 'দক্ষতা ও সেবার একটি ডিজিটাল প্ল্যাটফর্ম',
+  'ob_welcome_desc':
+      'লেগ্যাসিহাব শিক্ষা, ডিজিটাল সেবা এবং কমিউনিটি ফিচার একটি সুসংগঠিত প্ল্যাটফর্মে এনেছে।',
+  'ob_how_works_title': 'কিভাবে কাজ করে',
+  'ob_how_works_subtitle': 'সহজ কাঠামো, স্পষ্ট প্রবাহ',
+  'ob_how_works_desc':
+      'বিভিন্ন ফিচার অন্বেষণ করুন, উপলব্ধ সেবা ব্যবহার করুন এবং আপনার নিজের গতিতে প্ল্যাটফর্ম কার্যক্রমে অংশ নিন।',
+  'ob_transparency_title': 'স্বচ্ছতা ও নিয়ন্ত্রণ',
+  'ob_transparency_subtitle': 'স্পষ্টতা ও বিশ্বাসের জন্য ডিজাইন করা',
+  'ob_transparency_desc':
+      'সমস্ত কার্যক্রম, সেটিংস এবং অ্যাকাউন্ট অপশন স্পষ্টভাবে উপস্থাপন করা হয়েছে যাতে আপনি সবসময় জানেন প্ল্যাটফর্মটি কিভাবে কাজ করে।',
+  'ob_features_title': 'লেগ্যাসিহাব ফিচারসমূহ',
+  'ob_features_subtitle': 'একটি প্ল্যাটফর্মে একাধিক ফিচার',
+  'ob_feature_1': 'ডিজিটাল লার্নিং মডিউল',
+  'ob_feature_2': 'প্রোডাক্ট রিসেলিং হাব',
+  'ob_feature_3': 'মোবাইল রিচার্জ ও টপ-আপ',
+  'ob_feature_4': 'মাইক্রো জবস ও টাস্ক',
+  'ob_feature_5': 'ফ্রিল্যান্স মার্কেটপ্লেস',
+  'ob_feature_6': 'এক্সক্লুসিভ টেলিকম অফার',
+  'ob_feature_7': 'স্বাস্থ্য ও সুস্থতা টিপস',
+  'ob_feature_8': 'রিওয়ার্ড পয়েন্ট সিস্টেম',
+  'ob_feature_9': 'কমিউনিটি নেটওয়ার্কিং',
+  'ob_feature_10': 'ক্যারিয়ার গ্রোথ ইনসাইটস',
+  'ob_feature_11': 'ইভেন্ট ও নিউজ আপডেট',
+  'ob_feature_12': 'অ্যাচিভমেন্ট ব্যাজ',
 };

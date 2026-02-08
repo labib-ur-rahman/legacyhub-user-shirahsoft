@@ -70,6 +70,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '95177033076',
     projectId: 'legacyhub-shirahsoft',
     storageBucket: 'legacyhub-shirahsoft.firebasestorage.app',
+    androidClientId: '95177033076-ihqvdtqbimg6752d8vqqsi78g0rn49va.apps.googleusercontent.com',
+    iosClientId: '95177033076-ea86p9uc0rnp367gidjjptgapo8o5719.apps.googleusercontent.com',
     iosBundleId: 'com.shirahsoft.legacyhub',
   );
+
 }

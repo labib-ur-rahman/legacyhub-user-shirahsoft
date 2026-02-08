@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:legacyhub/features/authentication/views/screens/email_sent_screen.dart';
+import 'package:legacyhub/features/authentication/views/screens/forgot_password_screen.dart';
+import 'package:legacyhub/features/authentication/views/screens/invite_code_screen.dart';
 import 'package:legacyhub/features/authentication/views/screens/login_screen.dart';
+import 'package:legacyhub/features/authentication/views/screens/signup_screen.dart';
 import 'package:legacyhub/features/home/views/screens/home_screen.dart';
 import 'package:legacyhub/features/main/views/screens/main_screen.dart';
-import 'package:legacyhub/features/onboarding/views/screens/language_screen.dart';
-import 'package:legacyhub/features/onboarding/views/screens/style_screen.dart';
-import 'package:legacyhub/features/onboarding/views/screens/theme_screen.dart';
-import 'package:legacyhub/features/splash/views/screens/splash_screen.dart';
+import 'package:legacyhub/features/personalization/onboarding/views/screens/language_screen.dart';
+import 'package:legacyhub/features/personalization/onboarding/views/screens/onboarding_screen.dart';
+import 'package:legacyhub/features/personalization/onboarding/views/screens/style_screen.dart';
+import 'package:legacyhub/features/personalization/onboarding/views/screens/theme_screen.dart';
+import 'package:legacyhub/features/personalization/splash/views/screens/splash_screen.dart';
 
 import 'app_routes.dart';
 
@@ -26,6 +31,13 @@ class AppPages {
     ),
 
     // ==================== Onboarding Screens ====================
+    GetPage(
+      name: AppRoutes.ONBOARDING,
+      page: () => const OnboardingScreen(),
+      transition: Transition.rightToLeftWithFade,
+      transitionDuration: const Duration(milliseconds: 600),
+      curve: Curves.easeInOut,
+    ),
     GetPage(
       name: AppRoutes.LANGUAGE_SELECTION,
       page: () => const LanguageScreen(),
@@ -53,6 +65,30 @@ class AppPages {
       name: AppRoutes.LOGIN,
       page: () => const LoginScreen(),
       transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: AppRoutes.SIGNUP,
+      page: () => const SignupScreen(),
+      transition: Transition.rightToLeftWithFade,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: AppRoutes.FORGOT_PASSWORD,
+      page: () => const ForgotPasswordScreen(),
+      transition: Transition.rightToLeftWithFade,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: AppRoutes.CHECK_EMAIL,
+      page: () => const CheckEmailScreen(),
+      transition: Transition.rightToLeftWithFade,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: AppRoutes.INVITE_CODE,
+      page: () => const InviteCodeScreen(),
+      transition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: 400),
     ),
 
