@@ -54,7 +54,8 @@ const Map<String, String> enUS = {
   'light_theme_desc': 'Bright and clear',
   'system_theme_desc': 'Follow system settings',
   'choose_language': 'Choose preferred language',
-  'choose_language_subtitle': 'LegacyHub comes with both English and Bangla languages. Choose your preferred language to continue.',
+  'choose_language_subtitle':
+      'LegacyHub comes with both English and Bangla languages. Choose your preferred language to continue.',
   'english': 'English',
   'bangla': 'বাংলা',
   'english_desc': 'English (US)',
@@ -106,6 +107,57 @@ const Map<String, String> enUS = {
   'enter_name': 'Enter your name',
   'upload_photo': 'Upload Photo',
   'change_photo': 'Change Photo',
+
+  // New Auth Flow
+  'auth_sign_in_title': 'SIGN IN TO YOUR ACCOUNT',
+  'auth_sign_in_subtitle': 'Enter your email and password to log in',
+  'auth_email_hint': 'Email',
+  'auth_password_hint': 'Password',
+  'auth_password': 'Password',
+  'auth_remember_me': 'Remember Me',
+  'auth_forgot_password': 'Forgot Password?',
+  'auth_log_in': 'LOG IN',
+  'auth_no_account': 'Don\'t have an account? ',
+  'auth_sign_up': 'SIGN UP',
+  'auth_or_login_with': 'Or login with',
+  'auth_or': 'Or',
+  'auth_first_name': 'First Name',
+  'auth_last_name_optional': 'Last Name (Optional)',
+  'auth_phone_hint': 'Phone Number',
+  'auth_confirm_password_hint': 'Confirm Password',
+  'auth_have_account': 'Already have an account? ',
+  'auth_forgot_password_title': 'FORGOT PASSWORD?',
+  'auth_forgot_password_desc':
+      'Don\'t worry! It happens. Please enter the email address associated with your account.',
+  'auth_email_address': 'Email Address',
+  'auth_send_reset_link': 'SEND RESET LINK',
+  'auth_back_to_login': 'Back to Login',
+  'auth_check_email_title': 'CHECK YOUR EMAIL!',
+  'auth_check_email_subtitle': 'We\'ve sent a password reset link to:',
+  'auth_check_email_instructions':
+      'Please check your inbox and click the reset link to create a new password. If you don\'t see the email, check your spam folder.',
+  'auth_tip_label': 'Tip:',
+  'auth_check_email_tip':
+      'The reset link will expire in 1 hour. If expired, request a new one.',
+  'auth_didnt_receive_email': 'Didn\'t receive the email? ',
+  'auth_resend': 'Resend',
+  'auth_complete_profile': 'COMPLETE YOUR PROFILE',
+  'auth_complete_profile_desc':
+      'Enter your phone number and invite code to complete your profile.',
+  'auth_complete_signup': 'COMPLETE SIGNUP',
+  'auth_invite_code_tip':
+      'Ask the person who invited you for their invite code. Every account needs one!',
+  'auth_cancel_signup': 'Cancel Signup',
+  'auth_cancel_signup_desc':
+      'Are you sure you want to cancel? Your Google account will be disconnected and you\'ll need to start over.',
+  'auth_stay': 'Stay',
+  'auth_leave': 'Leave',
+  'auth_login_success': 'Logged in successfully',
+  'auth_signup_success': 'Account created successfully',
+  'auth_password_reset_sent': 'Password reset email sent',
+  'auth_logout_success': 'Logged out successfully',
+  'auth_validating_invite_code': 'Validating invite code...',
+  'auth_creating_account': 'Creating your account...',
 
   // ==================== Wallet ====================
   'wallet': 'Wallet',
@@ -307,4 +359,32 @@ const Map<String, String> enUS = {
   'payment_failed': 'Payment Failed',
   'payment_cancelled': 'Payment Cancelled',
   'processing_payment': 'Processing Payment',
+
+  // ==================== Onboarding Screens ====================
+  'ob_welcome_title': 'Welcome to LegacyHub',
+  'ob_welcome_subtitle': 'A Digital Platform for Skills and Services',
+  'ob_welcome_desc':
+      'LegacyHub brings learning, digital services, and community features together in one organized platform.',
+  'ob_how_works_title': 'How It Works',
+  'ob_how_works_subtitle': 'Simple Structure, Clear Flow',
+  'ob_how_works_desc':
+      'Explore different features, use available services, and participate in platform activities at your own pace.',
+  'ob_transparency_title': 'Transparency & Control',
+  'ob_transparency_subtitle': 'Designed for Clarity and Trust',
+  'ob_transparency_desc':
+      'All activities, settings, and account options are clearly presented so you always know how the platform works.',
+  'ob_features_title': 'LegacyHub Features',
+  'ob_features_subtitle': 'Multiple Features in One Platform',
+  'ob_feature_1': 'Digital Learning Modules',
+  'ob_feature_2': 'Product Reselling Hub',
+  'ob_feature_3': 'Mobile Recharge & Top-Up',
+  'ob_feature_4': 'Micro Jobs & Tasks',
+  'ob_feature_5': 'Freelance Marketplace',
+  'ob_feature_6': 'Exclusive Telecom Offers',
+  'ob_feature_7': 'Health & Wellness Tips',
+  'ob_feature_8': 'Reward Points System',
+  'ob_feature_9': 'Community Networking',
+  'ob_feature_10': 'Career Growth Insights',
+  'ob_feature_11': 'Event & News Updates',
+  'ob_feature_12': 'Achievement Badges',
 };

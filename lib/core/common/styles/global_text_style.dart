@@ -137,3 +137,22 @@ TextStyle getImperialScriptTextStyle({
     fontStyle: fontStyle,
   );
 }
+
+TextStyle getBebasNeueTextStyle({
+  double fontSize = 28.0,
+  FontWeight fontWeight = FontWeight.w600,
+  double lineHeight = 1.2,
+  double letterSpacing = 1.5,
+  TextAlign textAlign = TextAlign.start,
+  Color color = AppColors.dark,
+  FontStyle fontStyle = FontStyle.normal,
+}) {
+  return GoogleFonts.bebasNeue(
+    fontSize: fontSize.sp,
+    fontWeight: fontWeight,
+    height: lineHeight.h,
+    letterSpacing: letterSpacing,
+    color: color,
+    fontStyle: fontStyle,
+  );
+}

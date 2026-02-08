@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:legacyhub/core/common/widgets/custom_shapes/curved_edges/curved_edges_widget.dart';
 import 'package:legacyhub/core/utils/constants/app_style_colors.dart';
-import 'package:legacyhub/features/onboarding/controllers/style_controller.dart';
+import 'package:legacyhub/features/personalization/onboarding/controllers/style_controller.dart';
 
 /// Custom App Bar - LegacyHub branded app bar with curved edges
 ///
