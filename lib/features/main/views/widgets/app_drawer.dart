@@ -6,9 +6,9 @@ import 'package:legacyhub/core/common/styles/global_text_style.dart';
 import 'package:legacyhub/core/utils/constants/app_style_colors.dart';
 import 'package:legacyhub/features/main/controllers/main_header_controller.dart';
 import 'package:legacyhub/features/main/views/widgets/profile_picture.dart';
-import 'package:legacyhub/features/onboarding/views/screens/theme_screen.dart';
-import 'package:legacyhub/features/onboarding/views/screens/style_screen.dart';
-import 'package:legacyhub/features/onboarding/views/screens/language_screen.dart';
+import 'package:legacyhub/features/personalization/onboarding/views/screens/theme_screen.dart';
+import 'package:legacyhub/features/personalization/onboarding/views/screens/style_screen.dart';
+import 'package:legacyhub/features/personalization/onboarding/views/screens/language_screen.dart';
 
 /// Custom App Drawer - Right-to-left sliding drawer with professional design
 ///

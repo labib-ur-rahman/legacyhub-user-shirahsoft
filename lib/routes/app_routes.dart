@@ -15,6 +15,9 @@ class AppRoutes {
   static const String MAIN = '/main';
 
   // ==================== Onboarding Routes ====================
+  /// Main onboarding flow (4 screens)
+  static const String ONBOARDING = '/onboarding';
+
   /// Theme selection during onboarding
   static const String THEME_SELECTION = '/theme-selection';
 
@@ -27,6 +30,18 @@ class AppRoutes {
   // ==================== Authentication Routes ====================
   /// Login screen route
   static const String LOGIN = '/login';
+
+  /// Signup screen route
+  static const String SIGNUP = '/signup';
+
+  /// Forgot password screen route
+  static const String FORGOT_PASSWORD = '/forgot-password';
+
+  /// Check email screen route (after forgot password)
+  static const String CHECK_EMAIL = '/check-email';
+
+  /// Invite code screen route (Google signup completion)
+  static const String INVITE_CODE = '/invite-code';
 
   /// OTP verification screen
   static const String OTP_VERIFICATION = '/otp-verification';
@@ -129,6 +144,10 @@ class AppRoutes {
 
   // Auth
   static String getLoginScreen() => LOGIN;
+  static String getSignupScreen() => SIGNUP;
+  static String getForgotPasswordScreen() => FORGOT_PASSWORD;
+  static String getCheckEmailScreen() => CHECK_EMAIL;
+  static String getInviteCodeScreen() => INVITE_CODE;
   static String getOtpScreen() => OTP_VERIFICATION;
   static String getProfileSetupScreen() => PROFILE_SETUP;
 

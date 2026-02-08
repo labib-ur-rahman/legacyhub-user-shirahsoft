@@ -28,8 +28,7 @@ class TabIcon extends StatelessWidget {
         children: [
           SvgIconHelper.buildIcon(
             assetPath: iconPath,
-            width: iconSize.w,
-            height: iconSize.h,
+            size: iconSize.w,
           ),
           // Red notification dot for Activities tab
           if (showDot)
