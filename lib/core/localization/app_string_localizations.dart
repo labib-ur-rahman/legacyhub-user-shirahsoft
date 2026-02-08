@@ -109,6 +109,53 @@ class AppStrings {
   static String get uploadPhoto => 'upload_photo'.tr;
   static String get changePhoto => 'change_photo'.tr;
 
+  // ===== New Auth Flow =====
+  static String get authSignInTitle => 'auth_sign_in_title'.tr;
+  static String get authSignInSubtitle => 'auth_sign_in_subtitle'.tr;
+  static String get authEmailHint => 'auth_email_hint'.tr;
+  static String get authPasswordHint => 'auth_password_hint'.tr;
+  static String get authPassword => 'auth_password'.tr;
+  static String get authRememberMe => 'auth_remember_me'.tr;
+  static String get authForgotPassword => 'auth_forgot_password'.tr;
+  static String get authLogIn => 'auth_log_in'.tr;
+  static String get authNoAccount => 'auth_no_account'.tr;
+  static String get authSignUp => 'auth_sign_up'.tr;
+  static String get authOrLoginWith => 'auth_or_login_with'.tr;
+  static String get authOr => 'auth_or'.tr;
+  static String get authFirstName => 'auth_first_name'.tr;
+  static String get authLastNameOptional => 'auth_last_name_optional'.tr;
+  static String get authPhoneHint => 'auth_phone_hint'.tr;
+  static String get authConfirmPasswordHint => 'auth_confirm_password_hint'.tr;
+  static String get authHaveAccount => 'auth_have_account'.tr;
+  static String get authForgotPasswordTitle => 'auth_forgot_password_title'.tr;
+  static String get authForgotPasswordDesc => 'auth_forgot_password_desc'.tr;
+  static String get authEmailAddress => 'auth_email_address'.tr;
+  static String get authSendResetLink => 'auth_send_reset_link'.tr;
+  static String get authBackToLogin => 'auth_back_to_login'.tr;
+  static String get authCheckEmailTitle => 'auth_check_email_title'.tr;
+  static String get authCheckEmailSubtitle => 'auth_check_email_subtitle'.tr;
+  static String get authCheckEmailInstructions =>
+      'auth_check_email_instructions'.tr;
+  static String get authTipLabel => 'auth_tip_label'.tr;
+  static String get authCheckEmailTip => 'auth_check_email_tip'.tr;
+  static String get authDidntReceiveEmail => 'auth_didnt_receive_email'.tr;
+  static String get authResend => 'auth_resend'.tr;
+  static String get authCompleteProfile => 'auth_complete_profile'.tr;
+  static String get authCompleteProfileDesc => 'auth_complete_profile_desc'.tr;
+  static String get authCompleteSignup => 'auth_complete_signup'.tr;
+  static String get authInviteCodeTip => 'auth_invite_code_tip'.tr;
+  static String get authCancelSignup => 'auth_cancel_signup'.tr;
+  static String get authCancelSignupDesc => 'auth_cancel_signup_desc'.tr;
+  static String get authStay => 'auth_stay'.tr;
+  static String get authLeave => 'auth_leave'.tr;
+  static String get authLoginSuccess => 'auth_login_success'.tr;
+  static String get authSignupSuccess => 'auth_signup_success'.tr;
+  static String get authPasswordResetSent => 'auth_password_reset_sent'.tr;
+  static String get authLogoutSuccess => 'auth_logout_success'.tr;
+  static String get authValidatingInviteCode =>
+      'auth_validating_invite_code'.tr;
+  static String get authCreatingAccount => 'auth_creating_account'.tr;
+
   // ==================== Wallet ====================
   static String get wallet => 'wallet'.tr;
   static String get walletBalance => 'wallet_balance'.tr;
@@ -309,4 +356,29 @@ class AppStrings {
   static String get paymentFailed => 'payment_failed'.tr;
   static String get paymentCancelled => 'payment_cancelled'.tr;
   static String get processingPayment => 'processing_payment'.tr;
+
+  // ==================== Onboarding Screens ====================
+  static String get obWelcomeTitle => 'ob_welcome_title'.tr;
+  static String get obWelcomeSubtitle => 'ob_welcome_subtitle'.tr;
+  static String get obWelcomeDesc => 'ob_welcome_desc'.tr;
+  static String get obHowWorksTitle => 'ob_how_works_title'.tr;
+  static String get obHowWorksSubtitle => 'ob_how_works_subtitle'.tr;
+  static String get obHowWorksDesc => 'ob_how_works_desc'.tr;
+  static String get obTransparencyTitle => 'ob_transparency_title'.tr;
+  static String get obTransparencySubtitle => 'ob_transparency_subtitle'.tr;
+  static String get obTransparencyDesc => 'ob_transparency_desc'.tr;
+  static String get obFeaturesTitle => 'ob_features_title'.tr;
+  static String get obFeaturesSubtitle => 'ob_features_subtitle'.tr;
+  static String get obFeature1 => 'ob_feature_1'.tr;
+  static String get obFeature2 => 'ob_feature_2'.tr;
+  static String get obFeature3 => 'ob_feature_3'.tr;
+  static String get obFeature4 => 'ob_feature_4'.tr;
+  static String get obFeature5 => 'ob_feature_5'.tr;
+  static String get obFeature6 => 'ob_feature_6'.tr;
+  static String get obFeature7 => 'ob_feature_7'.tr;
+  static String get obFeature8 => 'ob_feature_8'.tr;
+  static String get obFeature9 => 'ob_feature_9'.tr;
+  static String get obFeature10 => 'ob_feature_10'.tr;
+  static String get obFeature11 => 'ob_feature_11'.tr;
+  static String get obFeature12 => 'ob_feature_12'.tr;
 }

@@ -1,265 +1,396 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
-import 'package:legacyhub/core/services/firebase_service.dart';
 import 'package:legacyhub/core/common/widgets/popups/custom_snackbar.dart';
-import 'package:legacyhub/data/models/user/user_model.dart';
-import 'package:legacyhub/data/repositories/user_repository.dart';
+import 'package:legacyhub/core/localization/app_string_localizations.dart';
+import 'package:legacyhub/core/services/local_storage_service.dart';
+import 'package:legacyhub/core/services/logger_service.dart';
+import 'package:legacyhub/core/utils/validators/validation.dart';
+import 'package:legacyhub/data/repositories/authentication/auth_repository.dart';
 import 'package:legacyhub/routes/app_routes.dart';
 
 /// Authentication Controller
-/// Handles user authentication state and operations
+/// Manages login, signup, Google auth, forgot password, invite code flows.
+/// Follows MVC + Repository pattern per LegacyHub architecture.
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();
 
-  // ===== Repositories =====
-  final UserRepository _userRepo = UserRepository();
-  final FirebaseService _firebase = FirebaseService.instance;
+  // ===== Repository =====
+  final AuthRepository _repository = AuthRepository();
 
   // ===== Observable State =====
   final Rx<User?> firebaseUser = Rx<User?>(null);
-  final Rx<UserModel?> currentUser = Rx<UserModel?>(null);
   final RxBool isLoading = false.obs;
-  final RxBool isLoggedIn = false.obs;
-  final RxBool isNewUser = false.obs;
+  final RxBool isGoogleSignIn = false.obs;
+  final RxBool rememberMe = false.obs;
+  final RxMap<String, dynamic> userProfile = RxMap<String, dynamic>({});
+
+  // ===== Form Controllers =====
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController inviteCodeController = TextEditingController();
+
+  // ===== Form Keys =====
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
   // ===== Streams =====
-  StreamSubscription<User?>? _authSubscription;
-  StreamSubscription<UserModel?>? _userSubscription;
+  // StreamSubscription<User?>? _authSubscription;
 
   // ===== Getters =====
+  bool get isAuthenticated => firebaseUser.value != null;
   String? get userId => firebaseUser.value?.uid;
-  bool get hasUser => currentUser.value != null;
-  String get userName => currentUser.value?.identity.fullName ?? '';
-  String get userPhone => currentUser.value?.identity.phone ?? '';
-  String get userAvatar => currentUser.value?.identity.avatarUrl ?? '';
-  String get inviteCode => currentUser.value?.formattedInviteCode ?? '';
+  String get userRole => userProfile['role'] ?? 'user';
 
   @override
   void onInit() {
     super.onInit();
-    _initAuthListener();
+    firebaseUser.value = _repository.currentUser;
+    _repository.authStateChanges.listen((User? user) {
+      firebaseUser.value = user;
+    });
+    // _loadLastEmail();
   }
 
   @override
   void onClose() {
-    _authSubscription?.cancel();
-    _userSubscription?.cancel();
+    // _authSubscription?.cancel();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    phoneController.dispose();
+    inviteCodeController.dispose();
     super.onClose();
   }
 
-  /// Initialize auth state listener
-  void _initAuthListener() {
-    _authSubscription = _firebase.auth.authStateChanges().listen(
-      (User? user) async {
-        firebaseUser.value = user;
+  // =====================================================================
+  // LOGIN
+  // =====================================================================
 
-        if (user != null) {
-          await _loadUserData(user.uid);
-          isLoggedIn.value = true;
-        } else {
-          currentUser.value = null;
-          isLoggedIn.value = false;
-          _userSubscription?.cancel();
-        }
-      },
-      onError: (error) {
+  /// Login with email and password
+  Future<void> loginWithEmailPassword() async {
+    if (!loginFormKey.currentState!.validate()) {
+      LoggerService.warning('⚠️ Login form validation failed');
+      return;
+    }
+
+    try {
+      isLoading.value = true;
+      LoggerService.info('🔐 Starting login process...');
+
+      final result = await _repository.signInWithEmailPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text,
+      );
+
+      LoggerService.info('✅ Login successful');
+      LoggerService.debug('User profile: ${result['profile']}');
+
+      userProfile.value = result['profile'] ?? {};
+      LocalStorageService.write('lastEmail', emailController.text.trim());
+      LoggerService.info('💾 Last email saved to storage');
+
+      AppSnackBar.successSnackBar(
+        title: AppStrings.success,
+        message: AppStrings.authLoginSuccess,
+      );
+
+      // Navigate to main screen
+      Get.offAllNamed(AppRoutes.MAIN);
+      LoggerService.info('✅ Navigation to main screen');
+    } catch (e) {
+      LoggerService.error('❌ Login failed', e);
+      AppSnackBar.errorSnackBar(title: AppStrings.error, message: e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // =====================================================================
+  // SIGNUP
+  // =====================================================================
+
+  /// Signup with email and password
+  Future<void> signupWithEmailPassword() async {
+    if (!signupFormKey.currentState!.validate()) {
+      LoggerService.warning('⚠️ Signup form validation failed');
+      return;
+    }
+
+    try {
+      isLoading.value = true;
+
+      // Format invite code to uppercase
+      final inviteCode = inviteCodeController.text.trim().toUpperCase();
+
+      // Format phone (ensure clean 11-digit format)
+      final phone = SLValidator.formatPhone(phoneController.text.trim());
+
+      LoggerService.info(
+        '📱 Phone formatted: ${phoneController.text} → $phone',
+      );
+
+      // Step 1: Validate invite code exists in Firestore BEFORE starting signup
+      LoggerService.info('🔍 Validating invite code: $inviteCode');
+
+      final isValidCode = await _repository.validateInviteCode(inviteCode);
+      if (!isValidCode) {
         AppSnackBar.errorSnackBar(
-          title: 'Auth Error',
-          message: error.toString(),
+          title: AppStrings.error,
+          message: 'Invalid invite code. Please check and try again.',
         );
-      },
-    );
-  }
+        isLoading.value = false;
+        return;
+      }
 
-  /// Load user data from Firestore
-  Future<void> _loadUserData(String uid) async {
-    try {
-      // Cancel existing subscription
-      _userSubscription?.cancel();
+      LoggerService.info('✅ Invite code is valid');
 
-      // Stream user data for real-time updates
-      _userSubscription = _userRepo
-          .streamUser(uid)
-          .listen(
-            (user) {
-              currentUser.value = user;
-            },
-            onError: (error) {
-              AppSnackBar.errorSnackBar(
-                title: 'User Data Error',
-                message: error.toString(),
-              );
-            },
-          );
-    } catch (e) {
-      AppSnackBar.errorSnackBar(
-        title: 'Error',
-        message: 'Failed to load user data',
+      // Step 2: Create account via Cloud Function (handles auth + all Firestore docs)
+      LoggerService.info('🔐 Starting signup process...');
+
+      final result = await _repository.signUpWithEmailPassword(
+        email: emailController.text.trim(),
+        firstName: firstNameController.text.trim(),
+        lastName: lastNameController.text.trim(),
+        phoneNumber: phone,
+        password: passwordController.text,
+        inviteCode: inviteCode,
       );
+
+      LoggerService.info('✅ Signup successful');
+      LoggerService.debug('User profile: ${result['profile']}');
+
+      if (result['profile'] != null) {
+        userProfile.value = result['profile'] ?? {};
+        LoggerService.info('📊 User profile stored in controller');
+      } else {
+        LoggerService.warning('⚠️ Profile is null, using empty map');
+        userProfile.value = {};
+      }
+
+      // Show success dialog
+      AppSnackBar.successSnackBar(
+        title: AppStrings.success,
+        message: AppStrings.authSignupSuccess,
+      );
+
+      // Navigate to main screen after 2 seconds
+      await Future.delayed(const Duration(seconds: 2));
+      Get.offAllNamed('/main');
+      LoggerService.info('✅ Navigation to main screen');
+    } catch (e) {
+      LoggerService.error('❌ Signup failed', e);
+      AppSnackBar.errorSnackBar(title: AppStrings.error, message: e.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 
-  // ===== Phone Authentication =====
+  // =====================================================================
+  // CONTINUE WITH GOOGLE
+  // =====================================================================
 
-  /// Send OTP to phone number
-  Future<void> sendOTP({
-    required String phoneNumber,
-    required Function(String verificationId) onCodeSent,
-    required Function(String error) onError,
-  }) async {
+  /// Sign in with Google
+  /// Flow:
+  /// 1. Always show Google account picker
+  /// 2. After auth, check profile completeness (parentUid + phone)
+  /// 3. Complete profile → go to dashboard
+  /// 4. Incomplete profile → navigate to invite code screen
+  /// 5. User cancels screen → sign out + delete auth credential
+  Future<void> continueWithGoogle() async {
+    try {
+      isLoading.value = true;
+      isGoogleSignIn.value = true;
+      LoggerService.info('🔐 Starting Google Sign-in flow...');
+
+      final result = await _repository.signInWithGoogle();
+
+      LoggerService.debug('📦 Google sign-in result: $result');
+
+      final bool profileComplete = result['profileComplete'] == true;
+
+      if (profileComplete) {
+        // Fully complete profile — login directly to dashboard
+        LoggerService.info(
+          '✅ Complete profile found — navigating to dashboard',
+        );
+        userProfile.value = result['profile'] ?? {};
+
+        AppSnackBar.successSnackBar(
+          title: AppStrings.success,
+          message: AppStrings.authLoginSuccess,
+        );
+
+        await Future.delayed(const Duration(milliseconds: 500));
+        Get.offAllNamed(AppRoutes.MAIN);
+        LoggerService.info('✅ Navigation complete');
+      } else {
+        // Profile incomplete or new user — must provide phone + invite code
+        LoggerService.info(
+          '📝 Incomplete profile — showing invite code screen',
+        );
+        isLoading.value = false;
+
+        // Show non-dismissible screen
+        // Cancel handler inside screen will sign out + delete auth user
+        Get.toNamed(AppRoutes.INVITE_CODE);
+      }
+    } catch (e) {
+      LoggerService.error('❌ Google sign in failed', e);
+
+      // Don't show error for user-cancelled picker
+      final errorMsg = e.toString();
+      if (!errorMsg.contains('cancelled')) {
+        AppSnackBar.errorSnackBar(
+          title: AppStrings.error,
+          message: errorMsg.replaceAll('Exception: ', ''),
+        );
+      }
+    } finally {
+      isLoading.value = false;
+      isGoogleSignIn.value = false;
+    }
+  }
+
+  /// Complete Google signup — called from InviteCodeDialog
+  /// Validates phone + invite code, calls cloud function, navigates to dashboard
+  /// On failure: shows error but does NOT clean up auth (user can retry)
+  Future<void> completeGoogleSignup() async {
     try {
       isLoading.value = true;
 
-      await _firebase.auth.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        timeout: const Duration(seconds: 60),
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          // Auto-verification (Android only)
-          await _signInWithCredential(credential);
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          isLoading.value = false;
-          onError(_getAuthErrorMessage(e.code));
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          isLoading.value = false;
-          onCodeSent(verificationId);
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          // Auto retrieval timeout
-        },
+      final inviteCode = inviteCodeController.text.trim().toUpperCase();
+      final phone = SLValidator.formatPhone(phoneController.text.trim());
+
+      LoggerService.info(
+        'Completing Google signup — phone: $phone, inviteCode: $inviteCode',
       );
+
+      final result = await _repository.completeGoogleSignup(
+        phoneNumber: phone,
+        inviteCode: inviteCode,
+      );
+
+      LoggerService.info('Google signup completed successfully');
+      LoggerService.debug('Result data: ${result['data']}');
+
+      // Store the full user profile (not just {uid, inviteCode})
+      userProfile.value = result['profile'] ?? {};
+      LoggerService.info('✅ User profile stored in controller');
+
+      AppSnackBar.successSnackBar(
+        title: AppStrings.success,
+        message: AppStrings.authSignupSuccess,
+      );
+
+      LoggerService.info('Navigating to main screen...');
+      await Future.delayed(const Duration(milliseconds: 500));
+      Get.offAllNamed(AppRoutes.MAIN);
+      LoggerService.info('Navigation complete');
     } catch (e) {
+      LoggerService.error('Complete Google signup failed', e);
+      AppSnackBar.errorSnackBar(
+        title: AppStrings.error,
+        message: e.toString().replaceAll('Exception: ', ''),
+      );
+      rethrow; // Let the dialog handle the error state
+    } finally {
       isLoading.value = false;
-      onError('Failed to send OTP');
     }
   }
 
-  /// Verify OTP and sign in
-  Future<void> verifyOTP({
-    required String verificationId,
-    required String otp,
-    String? parentInviteCode,
-    required Function() onSuccess,
-    required Function(String error) onError,
-  }) async {
+  /// Cancel Google signup — sign out and delete auth user
+  Future<void> cancelGoogleSignup() async {
+    try {
+      await _repository.signOutAndDeleteUser();
+      LoggerService.info('Google signup cancelled — auth user deleted');
+    } catch (e) {
+      LoggerService.error('Cancel Google signup error', e);
+    }
+  }
+
+  // =====================================================================
+  // FORGOT PASSWORD
+  // =====================================================================
+
+  /// Send password reset email
+  Future<void> forgotPassword(String email) async {
     try {
       isLoading.value = true;
 
-      final credential = PhoneAuthProvider.credential(
-        verificationId: verificationId,
-        smsCode: otp,
+      await _repository.sendPasswordResetEmail(email);
+
+      AppSnackBar.successSnackBar(
+        title: AppStrings.success,
+        message: AppStrings.authPasswordResetSent,
       );
 
-      final userCredential = await _signInWithCredential(
-        credential,
-        parentInviteCode: parentInviteCode,
-      );
-
-      if (userCredential != null) {
-        onSuccess();
-      } else {
-        onError('Failed to verify OTP');
-      }
+      // Navigate to check email screen
+      Get.toNamed(AppRoutes.CHECK_EMAIL, arguments: {'email': email});
     } catch (e) {
-      isLoading.value = false;
-      onError('Invalid OTP');
-    }
-  }
-
-  /// Sign in with credential
-  Future<UserCredential?> _signInWithCredential(
-    AuthCredential credential, {
-    String? parentInviteCode,
-  }) async {
-    try {
-      final userCredential = await _firebase.auth.signInWithCredential(
-        credential,
-      );
-
-      final user = userCredential.user;
-      if (user == null) return null;
-
-      // Check if new user
-      final existingUser = await _userRepo.getUser(user.uid);
-
-      if (existingUser == null) {
-        // New user - create profile
-        isNewUser.value = true;
-
-        String? parentUid;
-        if (parentInviteCode != null && parentInviteCode.isNotEmpty) {
-          final parent = await _userRepo.getUserByInviteCode(parentInviteCode);
-          parentUid = parent?.uid;
-        }
-
-        await _userRepo.createNewUser(
-          uid: user.uid,
-          phone: user.phoneNumber ?? '',
-          parentUid: parentUid,
-        );
-      } else {
-        // Existing user - update last login
-        isNewUser.value = false;
-        await _userRepo.updateLastLogin(user.uid);
-      }
-
-      isLoading.value = false;
-      return userCredential;
-    } on FirebaseAuthException catch (e) {
-      isLoading.value = false;
+      LoggerService.error('Password reset failed', e);
       AppSnackBar.errorSnackBar(
-        title: 'Sign In Failed',
-        message: _getAuthErrorMessage(e.code),
+        title: AppStrings.error,
+        message: e.toString().replaceAll('Exception: ', ''),
       );
-      return null;
+    } finally {
+      isLoading.value = false;
     }
   }
 
-  // ===== Sign Out =====
+  // =====================================================================
+  // LOGOUT
+  // =====================================================================
 
   /// Sign out user
-  Future<void> signOut() async {
+  Future<void> logout() async {
     try {
-      isLoading.value = true;
+      await _repository.signOut();
+      userProfile.clear();
+      _clearControllers();
 
-      await _firebase.auth.signOut();
-      currentUser.value = null;
-      firebaseUser.value = null;
-      isLoggedIn.value = false;
-
-      isLoading.value = false;
+      AppSnackBar.successSnackBar(
+        title: AppStrings.success,
+        message: AppStrings.authLogoutSuccess,
+      );
 
       Get.offAllNamed(AppRoutes.LOGIN);
     } catch (e) {
-      isLoading.value = false;
-      AppSnackBar.errorSnackBar(
-        title: 'Sign Out Failed',
-        message: 'Failed to sign out',
-      );
+      LoggerService.error('Logout failed', e);
+      AppSnackBar.errorSnackBar(title: AppStrings.error, message: e.toString());
     }
   }
 
-  // ===== Error Messages =====
+  // =====================================================================
+  // HELPERS
+  // =====================================================================
 
-  String _getAuthErrorMessage(String code) {
-    switch (code) {
-      case 'invalid-phone-number':
-        return 'Invalid phone number format';
-      case 'too-many-requests':
-        return 'Too many attempts. Please try again later';
-      case 'session-expired':
-        return 'Session expired. Please request a new OTP';
-      case 'invalid-verification-code':
-        return 'Invalid OTP. Please try again';
-      case 'user-disabled':
-        return 'This account has been disabled';
-      case 'network-request-failed':
-        return 'Network error. Please check your connection';
-      default:
-        return 'Authentication failed. Please try again';
+  /// Clear all controllers
+  void _clearControllers() {
+    emailController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    firstNameController.clear();
+    lastNameController.clear();
+    phoneController.clear();
+    inviteCodeController.clear();
+  }
+
+  /// Load last email from storage
+  void loadLastEmail() {
+    final lastEmail = LocalStorageService.read<String>('lastEmail');
+    if (lastEmail != null && lastEmail.isNotEmpty) {
+      emailController.text = lastEmail;
     }
   }
 }
